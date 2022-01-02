@@ -1,0 +1,66 @@
+<div
+  class="zoom-panel"
+  [ngStyle]="{ width: viewportWidth + 'px', height: viewportHeight + 'px' }"
+>
+  <div
+    class="viewport"
+    id="viewport"
+    #viewport
+    [ngStyle]="{ width: viewportWidth + 'px', height: viewportHeight + 'px' }"
+  >
+    <div
+      ngDraggable
+      [handle]="NodeHandle"
+      class="node"
+      #nodeElement
+      *ngFor="let node of nodes"
+      [attr.id]="node.id"
+      (movingOffset)="onNodeMoved()"
+      [style.left.px]="node.x||0"
+      [style.top.px]="node.y||0"
+      [ngStyle]="node.style || {}"
+    >
+      <div #NodeHandle>
+        <ng-container
+          *ngIf="handleTemplate"
+          [ngTemplateOutlet]="handleTemplate"
+        ></ng-container>
+        <svg
+          *ngIf="!handleTemplate"
+          width="24px"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <rect fill="#ccc" x="15" y="5" width="20" height="20"></rect>
+        </svg>
+      </div>
+      <ng-container
+        *ngIf="nodeTemplate"
+        [ngTemplateOutlet]="nodeTemplate"
+        [ngTemplateOutletContext]="{ $implicit: node }"
+      ></ng-container>
+      <div *ngIf="!nodeTemplate">{{node.id}}</div>
+    </div>
+    <svg
+      class="handle"
+      [attr.width]="viewportHeight"
+      [attr.height]="viewportHeight"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:svg="http://www.w3.org/2000/svg"
+    >
+      <g *ngFor="let edge of edges">
+        <ng-container
+          *ngIf="edgeTemplate"
+          [ngTemplateOutlet]="edgeTemplate"
+          [ngTemplateOutletContext]="{ $implicit: edge }"
+        ></ng-container>
+        <path
+          *ngIf="!edgeTemplate"
+          [attr.d]="edge.bezierPath"
+          fill="transparent"
+          stroke="black"
+        />
+      </g>
+    </svg>
+  </div>
+</div>
