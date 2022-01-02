@@ -1,13 +1,13 @@
 {
   "name": "ngx-component-graph",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "copy:readme": "copyfiles ./README.md ./projects/ngx-component-graph",
     "build": "npm run build:lib && npm run build:showcase",
     "build:lib": "npm run copy:readme && ng build ngx-component-graph --configuration production",
-    "build:demo": "ng build ngx-component-graph-demo --base-href='https://blckwolf5851.github.io/ngx-component-graph/'",
+    "build:demo": "ng build ngx-component-graph-demo --prod --base-href https://blckwolf5851.github.io/ngx-component-graph/",
     "publish:lib": "npm publish ./dist/ngx-component-graph",
     "publish:demo": "npx angular-cli-ghpages --dir=./dist/ngx-component-graph-demo",
     "watch": "ng build --watch --configuration development",
